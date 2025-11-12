@@ -102,7 +102,7 @@ The drone will:
 * **Ramp up motors**
 * **Take off and climb briefly**
 * **Hover**
-* **Land using a smooth easing curve**
+* **Land using a cosine easing curve**
 * **Shut off motors fully**
 
 
