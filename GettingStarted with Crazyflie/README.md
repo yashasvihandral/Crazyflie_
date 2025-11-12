@@ -105,5 +105,5 @@ The drone will:
 * **Land using a smooth easing curve**
 * **Shut off motors fully**
 
-```
+
 
