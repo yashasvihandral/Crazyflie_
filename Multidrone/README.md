@@ -8,7 +8,7 @@ This tutorial shows you how to:
 - **Connect to both drones using Crazyradio PA**
 - **Run a Python script that lifts both drones in sync and lands them smoothly**
 
----
+
 
 **What You Need**
 
@@ -18,7 +18,7 @@ This tutorial shows you how to:
 - A macOS or Linux laptop  
 - A large, open, and safe indoor space to fly two drones
 
----
+
 
 **Step 1: Install Python 3**
 
@@ -42,7 +42,7 @@ python3 --version
 pip3 --version
 ```
 
----
+
 
 **Step 2: Set Up a Virtual Environment and Install Libraries**
 
@@ -59,7 +59,7 @@ source venv/bin/activate
 pip install cflib
 ```
 
----
+
 
 **Step 3: Create the Multi-Drone Flight Script**
 
@@ -121,7 +121,7 @@ PY
 
 This command writes the full script to `~/crazyflie/cf_up_min.py`.
 
----
+
 
 **Step 4: Power On and Connect the Drones**
 
@@ -130,7 +130,6 @@ This command writes the full script to `~/crazyflie/cf_up_min.py`.
 3. **Wait for LEDs to finish blinking**, indicating they are ready
 4. **Place both drones flat** on a level surface
 
----
 
 **Step 5: Run the Flight Script**
 
@@ -142,7 +141,7 @@ source ../venv/bin/activate
 python3 cf_up_min.py
 ```
 
----
+
 
 **What the Drones Will Do**
 
