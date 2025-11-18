@@ -1,8 +1,4 @@
-Here's a clean and easy-to-follow `README.md` you can paste into your GitHub repo. It walks through **formation flight with two Crazyflie drones** using Python.
 
----
-
-````markdown
 Formation Flight with Two Crazyflie Drones
 ==========================================
 
@@ -132,9 +128,7 @@ The drones will:
 * Ensure only two drones are powered on during flight
 * If one drone isn't detected, use the `cfclient` to verify connectivity
 
-```
 
----
 
 Let me know if you want to include a troubleshooting section or a diagram of the formation!
 ```
