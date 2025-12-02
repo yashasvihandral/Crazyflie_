@@ -1,3 +1,4 @@
+
 cat > ~/crazyflie/cf_two_drone_pattern.py <<'PY'
 import time
 from cflib.crtp import init_drivers, scan_interfaces
