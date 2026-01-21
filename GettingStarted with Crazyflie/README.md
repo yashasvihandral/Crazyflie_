@@ -3,6 +3,7 @@ Getting Started with Crazyflie: Takeoff and Landing via Python
 
 This tutorial shows you how to:
 
+
 - **Set up your system from scratch**  
 - **Install the necessary software**  
 - **Connect your Crazyflie drone**  
