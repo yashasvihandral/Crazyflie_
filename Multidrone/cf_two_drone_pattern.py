@@ -8,6 +8,7 @@ from cflib.positioning.motion_commander import MotionCommander
 
 init_drivers()
 
+
 uris = [uri for uri, _ in scan_interfaces() if uri.startswith("radio://")]
 if len(uris) < 2:
     raise SystemExit("Need at least two Crazyflies (found {})".format(len(uris)))
