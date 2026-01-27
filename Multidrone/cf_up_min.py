@@ -4,6 +4,7 @@ from cflib.crtp import init_drivers, scan_interfaces
 from cflib.crazyflie import Crazyflie
 from cflib.crazyflie.syncCrazyflie import SyncCrazyflie
 
+
 init_drivers()
 uris = [u for u, _ in scan_interfaces() if u.startswith("radio://")]
 if len(uris) < 2: raise SystemExit("Need at least two Crazyflies (found {})".format(len(uris)))
