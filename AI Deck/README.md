@@ -7,7 +7,6 @@ This tutorial shows you how to:
 * Connect to the AI-Deck access point and verify video streaming
 * Run a Python script that tracks a colored object and sends small yaw and forward commands to the Crazyflie
 
----
 
 ## What You Need
 
@@ -18,7 +17,6 @@ This tutorial shows you how to:
 * A laptop running macOS or Linux with Wi-Fi
 * A safe test area (start on the ground, props off if possible)
 
----
 
 ## Step 1: Install Python 3
 
@@ -42,7 +40,6 @@ python3 --version
 pip3 --version
 ```
 
----
 
 ## Step 2: Create a Virtual Environment
 
@@ -63,7 +60,6 @@ pip install -U pip
 pip install opencv-python numpy cflib pupil-apriltags
 ```
 
----
 
 ## Step 3: Build and Flash the Wi-Fi Streamer (One-time)
 
@@ -96,7 +92,6 @@ cfloader flash \
   deck-bcAI:gap8-fw -w radio://0/80/2M
 ```
 
----
 
 ## Step 4: Enable AI-Deck Wi-Fi AP Mode (Crazyflie Firmware)
 
@@ -116,7 +111,6 @@ Common default IP for the deck in AP mode is:
 
 * `192.168.4.1`
 
----
 
 ## Step 5: Verify Streaming with the Official Viewer
 
@@ -135,7 +129,6 @@ python3 /path/to/aideck-gap8-examples/examples/other/wifi-img-streamer/opencv-vi
 
 If it works, you should see an OpenCV window showing the live camera stream.
 
----
 
 ## Step 6: Set Up the Blob Follow Script
 
@@ -152,9 +145,6 @@ Recommended: update the script so the radio URI is configurable via CLI:
 
 * `--uri radio://0/80/2M`
 
-(If you want, I can rewrite your script with clean CLI flags, safety clamps, and a steady send rate.)
-
----
 
 ## Step 7: Power On and Connect Everything
 
@@ -169,7 +159,6 @@ Safety note:
 * First run it on the ground and watch the yaw response.
 * Fly only after you can hover reliably and you understand how to stop the script fast.
 
----
 
 ## Step 8: Run the Blob Follower
 
@@ -196,7 +185,6 @@ To stop:
 * Press `ESC` in the OpenCV window
 * If needed, unplug the battery
 
----
 
 ## What It Does
 
@@ -210,7 +198,6 @@ The script:
 * Sends yaw-rate commands to rotate toward the target
 * Creeps forward when centered and not “close enough”
 
----
 
 ## Tuning Tips
 
@@ -227,7 +214,6 @@ Quick tuning trick:
 * Then add yaw control
 * Then add forward motion last
 
----
 ## Attribution
 
 This tutorial compiles and explains work by Arkajit and Cesar (original notes):
@@ -292,13 +278,13 @@ https://github.com/bitcraze/crazyflie-lib-python
 
 ### Research papers
 
-* E2EdgeAI: Energy-Efficient Edge Computing for Deployment of Vision-Based DNNs on Autonomous Tiny Drones (paper landing page). ([Semantic Scholar][8])
+* E2EdgeAI: Energy-Efficient Edge Computing for Deployment of Vision-Based DNNs on Autonomous Tiny Drones
 
 ```text
 https://www.semanticscholar.org/paper/E2EdgeAI%3A-Energy-Efficient-Edge-Computing-for-of-on-Navardi-Humes/2c7c3944fbfc51364a03bbe3edc7dd2b08c494f4
 ```
 
-* AI and Vision based Autonomous Navigation of Nano-Drones in Partially-Known Environments (arXiv PDF).
+* AI and Vision based Autonomous Navigation of Nano-Drones in Partially-Known Environments
 
 ```text
 https://arxiv.org/pdf/2505.04972
