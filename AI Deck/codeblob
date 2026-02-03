@@ -1,0 +1,134 @@
+import argparse, socket, struct, time, threading
+import numpy as np
+import cv2
+
+from cflib.crazyflie import Crazyflie
+from cflib.crazyflie.syncCrazyflie import SyncCrazyflie
+from cflib.crtp import init_drivers
+
+URI = 'radio://0/80/2M'   # adjust
+
+# The official example sends frames with a 4-byte length header followed by JPEG or RAW bytes over TCP.
+# If your viewer uses a different transport, reuse its recv() code here.
+def recv_all(sock, size):
+    buf = b''
+    while len(buf) < size:
+        chunk = sock.recv(size - len(buf))
+        if not chunk:
+            return None
+        buf += chunk
+    return buf
+
+def frame_generator(host='192.168.4.1', port=5000, jpeg=True, width=320, height=240):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((host, port))
+    try:
+        while True:
+            header = recv_all(s, 4)
+            if header is None:
+                break
+            (length,) = struct.unpack('<I', header)
+            payload = recv_all(s, length)
+            if payload is None:
+                break
+
+            if jpeg:
+                img = cv2.imdecode(np.frombuffer(payload, dtype=np.uint8), cv2.IMREAD_COLOR)
+            else:
+                # RAW Bayer -> BGR (tune the conversion code if colors look off)
+                raw = np.frombuffer(payload, dtype=np.uint8).reshape((height, width))
+                img = cv2.cvtColor(raw, cv2.COLOR_BayerRG2BGR)
+            yield img
+    finally:
+        s.close()
+
+# --- Simple PD controller to keep blob centered ---
+class CFController:
+    def __init__(self, uri):
+        self.uri = uri
+        self._cf = Crazyflie(rw_cache='./cache')
+        self._scf = None
+        self.running = False
+
+    def __enter__(self):
+        init_drivers(enable_debug_driver=False)
+        self._scf = SyncCrazyflie(self.uri, cf=self._cf)
+        self._scf.open_link()
+        # enable high level commander and set estimator
+        self._cf.param.set_value('stabilizer.estimator', '2')
+        self._cf.param.set_value('commander.enHighLevel', '1')
+        time.sleep(0.5)
+        self.running = True
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        self.running = False
+        if self._scf:
+            self._scf.close_link()
+
+    def send_vel(self, vx, vy, vz, yaw_rate_deg):
+        # commander.send_velocity_world_setpoint(vx, vy, vz, yawRate)
+        self._cf.commander.send_velocity_world_setpoint(vx, vy, vz, yaw_rate_deg)
+
+# --- Blob tracking loop ---
+def track_and_follow(deck_ip, hsv_lo, hsv_hi, show=True):
+    # PD gains
+    K_yaw = 0.15     # how strongly to turn toward target
+    K_fwd = 0.002    # move forward a bit when target is centered and big enough
+    target_area = 8000  # pixel area threshold for "close enough"
+    deadband = 15       # pixels around center to ignore
+
+    with CFController(URI) as ctrl:
+        for frame in frame_generator(host=deck_ip, port=5000, jpeg=True):
+            h, w = frame.shape[:2]
+            cx0 = w // 2
+
+            hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+            mask = cv2.inRange(hsv, np.array(hsv_lo), np.array(hsv_hi))
+            mask = cv2.medianBlur(mask, 5)
+            cnts, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+            yaw_rate = 0.0
+            vx = 0.0
+
+            if cnts:
+                c = max(cnts, key=cv2.contourArea)
+                area = cv2.contourArea(c)
+                (x, y, wbox, hbox) = cv2.boundingRect(c)
+                cx = x + wbox // 2
+                err = cx - cx0
+
+                # yaw control
+                if abs(err) > deadband:
+                    yaw_rate = -K_yaw * err  # turn toward center (deg/s)
+
+                # forward if fairly centered and not too close
+                if abs(err) <= deadband and area < target_area:
+                    vx = 0.1 + K_fwd * (target_area - area)  # m/s
+
+                if show:
+                    cv2.rectangle(frame, (x, y), (x+wbox, y+hbox), (0,255,0), 2)
+                    cv2.circle(frame, (cx, y+hbox//2), 4, (0,255,0), -1)
+                    cv2.line(frame, (cx0, 0), (cx0, h), (255,255,255), 1)
+                    cv2.putText(frame, f"err={err} area={int(area)} yaw={yaw_rate:.1f} vx={vx:.2f}",
+                                (8, h-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 1)
+
+            ctrl.send_vel(vx, 0.0, 0.0, yaw_rate)
+            if show:
+                cv2.imshow("Blob follow (HSV mask)", frame)
+                if cv2.waitKey(1) & 0xFF == 27:  # ESC
+                    break
+
+    cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--deck_ip", default="192.168.4.1")
+    # red example (tune for your lighting)
+    ap.add_argument("--hsv_lo", nargs=3, type=int, default=[0, 120, 70])
+    ap.add_argument("--hsv_hi", nargs=3, type=int, default=[10, 255, 255])
+    args = ap.parse_args()
+    track_and_follow(args.deck_ip, args.hsv_lo, args.hsv_hi)
+
+
+
