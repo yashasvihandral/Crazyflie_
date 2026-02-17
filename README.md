@@ -1,5 +1,3 @@
-Crazyflie Python Projects and Tutorials
-
 
 This repository contains Python scripts and guides for working with the Crazyflie 2.1 nano quadcopter. It includes examples for setup, basic flight, multi-drone control, formation flight, and external tracking workflows using the Bitcraze Python library (cflib).
 
