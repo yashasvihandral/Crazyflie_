@@ -68,3 +68,27 @@ External motion capture integration for position tracking.
 
 AI Deck  
 Materials and resources related to AI Deck usage.
+
+Additional Resources
+
+Official Crazyflie product page  
+https://www.bitcraze.io/products/old-products/crazyflie-2-1/
+
+Bitcraze documentation (getting started, hardware, and tutorials)  
+https://www.bitcraze.io/documentation/
+
+Crazyflie Python library (cflib)  
+https://github.com/bitcraze/crazyflie-lib-python
+
+Crazyflie firmware repository  
+https://github.com/bitcraze/crazyflie-firmware
+
+Crazyflie client (cfclient)  
+https://github.com/bitcraze/crazyflie-clients-python
+
+Expansion decks overview  
+https://www.bitcraze.io/documentation/repository/crazyflie-firmware/master/deck/
+
+Bitcraze tutorials and examples  
+https://www.bitcraze.io/category/tutorials/
+
