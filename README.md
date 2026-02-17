@@ -5,7 +5,7 @@ This repository contains Python scripts and guides for working with the Crazyfli
 
 Crazyflie 2.1
 
-![Crazyflie 2.1 Nano Quadcopter](images/crazyflie_2_1.png)
+![Crazyflie 2.1 Nano Quadcopter](crazyflie.jpeg)
 
 Figure: Crazyflie 2.1 nano quadcopter
 
