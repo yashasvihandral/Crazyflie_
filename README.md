@@ -67,25 +67,22 @@ The Crazyflie includes built-in sensors that enable stable flight:
 
 
 
-## Repository overview
-
 This repository builds on the Crazyflie platform with practical examples and experiments:
 
-- **GettingStarted with Crazyflie**  
-  Setup instructions and first flight scripts.
+### [GettingStarted with Crazyflie](https://github.com/yashasvihandral/Crazyflie_/tree/main/GettingStarted%20with%20Crazyflie)
+Setup instructions and first flight scripts.
 
-- **Multidrone**  
-  Scripts for discovering and controlling multiple Crazyflies.
+### [Multidrone](https://github.com/yashasvihandral/Crazyflie_/tree/main/Multidrone)
+Scripts for discovering and controlling multiple Crazyflies.
 
-- **formationflight**  
-  Two-drone synchronized flight examples.
+### [formationflight](https://github.com/yashasvihandral/Crazyflie_/tree/main/formationflight)
+Two-drone synchronized flight examples.
 
-- **OptiTrack Motion Capture**  
-  External motion capture integration for position tracking.
+### [OptiTrack Motion Capture](https://github.com/yashasvihandral/Crazyflie_/tree/main/OptiTrack%20Motion%20Capture)
+External motion capture integration for position tracking.
 
-- **AI Deck**  
-  Materials and resources related to AI Deck usage.
-
+### [AI Deck](https://github.com/yashasvihandral/Crazyflie_/tree/main/AI%20Deck)
+Materials and resources related to AI Deck usage.
 
 ## Additional resources
 
