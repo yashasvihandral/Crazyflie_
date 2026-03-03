@@ -66,6 +66,7 @@ The Crazyflie includes built-in sensors that enable stable flight:
 - **Magnetometer** (depending on configuration)
 
 
+## Repository Structure
 
 This repository builds on the Crazyflie platform with practical examples and experiments:
 
